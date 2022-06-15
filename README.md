@@ -1,6 +1,6 @@
-# caesar_cipher
+# Ruby Projects
 
-Caesar Cipher project in Ruby
+Caesar Cipher 
 
 **Key Concepts**
 Conditionals
