@@ -19,7 +19,7 @@ class Game
 
   def load_or_new
     puts 'Enter "1" for a new game or "2" to load a saved game.'
-    input = gets.chomp 
+    input = gets.chomp
     if input == '1'
       @word.select_word
       play_game
@@ -30,7 +30,7 @@ class Game
     end
   end
 
-  def make_display 
+  def make_display
     if @display == ''
       length = word.choice.strip!.length
       @display = Array.new(length, '_')

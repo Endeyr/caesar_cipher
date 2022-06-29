@@ -1,6 +1,6 @@
 =begin
   psydocode
-  build function that sshows the shortest possible way to get from one square to another
+  build function that shows the shortest possible way to get from one square to another
   by outputting all squares the knight will stop along the way.
   Each square is a nested array.
   use breathe-first search

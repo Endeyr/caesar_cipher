@@ -15,12 +15,12 @@ module Serialize
     Dir.mkdir('saved_games') unless File.exist?('saved_games')
     f = File.open("saved_games/#{filename}.yml", 'w')
     YAML.dump({
-      :word => @word,
-      :display => @display,
-      :life => @life,
-      :player_misses => @player.misses,
-      :player_guess_history => @player.guess_history
-    },f)
+                word: @word,
+                display: @display,
+                life: @life,
+                player_misses: @player.misses,
+                player_guess_history: @player.guess_history
+              }, f)
     f.close
     puts "\nGAME SAVED"
   end
