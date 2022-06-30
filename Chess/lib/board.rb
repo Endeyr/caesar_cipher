@@ -32,7 +32,7 @@ class Board
     row, column = location
     grid[row][column] = piece
   end
-  
+
   def [](location)
     row, column = location
     grid[row][column]
@@ -54,7 +54,7 @@ class Board
 
   def in_check?(color)
     king = pieces.find {|p| p.color == color && p.is_a?(King)}
-      
+
     if king.nil?
       raise 'No king found.'
     end
@@ -75,6 +75,7 @@ class Board
 
   def checkmate?(color)
     return false if !in_check?(color)
+
     color_pieces = pieces.select {|p| p.color == color }
     color_pieces.all? {|piece| piece.safe_moves.empty? }
   end
@@ -110,8 +111,8 @@ class Board
     new_board = Board.new
     pieces.each do |piece|
       new_piece = piece.class.new(
-        new_board, 
-        piece.location, 
+        new_board,
+        piece.location,
         piece.color
       )
       new_board[new_piece.location] = new_piece

@@ -1,7 +1,7 @@
 module Serialize
   def load_game
     if File.exist?('./saved_games')
-      puts "Saved files: #{Dir.childred('./saved_games').join('')}"
+      puts "Saved files: #{Dir.children('./saved_games').join(' ')}"
       puts 'Enter one of the filenames "filename.yml"'
       filename = gets.chomp
       from_yaml(filename)
@@ -15,11 +15,7 @@ module Serialize
     Dir.mkdir('saved_games') unless File.exist?('saved_games')
     f = File.open("saved_games/#{filename}.yml", 'w')
     YAML.dump({
-                word: @word,
-                display: @display,
-                life: @life,
-                player_misses: @player.misses,
-                player_guess_history: @player.guess_history
+                board: @board
               }, f)
     f.close
     puts "\nGAME SAVED"
@@ -27,10 +23,6 @@ module Serialize
 
   def from_yaml(filename)
     f = YAML.safe_load(File.read("./saved_games/#{filename}"))
-    @word = f[:word]
-    @display = f[:display]
-    @life = f[:life]
-    @player.misses = f[:player_misses]
-    @player.guess_history = f[:player_guess_history]
+    @board = f[:board]
   end
 end

@@ -7,10 +7,7 @@ class Player
     @color = color
   end
 
-  def get_pos
-    gets
-      .chomp
-      .split(',')
-      .map { |part| part.to_i }
+  def position
+    gets.chomp.split(',').map { |part| part.to_i }
   end
 end

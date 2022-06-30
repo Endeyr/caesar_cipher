@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'yaml'
+require_relative './serialize'
+
 class Game
+  include Serialize
   attr_reader :player1, :player2, :board, :renderer
   attr_accessor :current_player
 
@@ -17,6 +21,7 @@ class Game
   end
 
   def play
+    load_or_new
     until over?
       renderer.render
       puts "It's #{current_player.color}'s turn"
@@ -38,17 +43,26 @@ class Game
   def take_turn
     start_pos = nil
 
-    loop do
-      puts 'Select a piece to move: '
-      start_pos = current_player.get_pos
-      break if board[start_pos].color == current_player.color
+    puts 'Answer q to quit, s to save, any to continue.'
+    answer = gets.chomp
+    if answer == 'q'
+      quit_game
+    elsif answer == 's'
+      save_game
+      quit_game
+    else
+      loop do
+        puts 'Select a piece to move: '
+        start_pos = current_player.position
+        break if board[start_pos].color == current_player.color
 
-      puts "Did not select a #{current_player.color} piece"
+        puts "Did not select a #{current_player.color} piece"
+      end
     end
 
     loop do
       puts 'Select a position to move to: '
-      end_pos = current_player.get_pos
+      end_pos = current_player.position
 
       begin
         board.move_piece(start_pos, end_pos)
@@ -56,6 +70,28 @@ class Game
       rescue InvalidMoveError => e
         puts e.message
       end
+    end
+  end
+
+  def quit_game
+    exit
+    p 'Thank you for playing!'
+  end
+
+  def save_game
+    puts 'Enter a file name (no spaces).'
+    filename = gets.chomp
+    to_yaml(filename)
+  end
+
+  def load_or_new
+    puts 'Enter "1" for a new game or "2" to load a saved game.'
+    input = gets.chomp
+    if input == '1'
+      return
+    else
+      load_game
+      return
     end
   end
 end
